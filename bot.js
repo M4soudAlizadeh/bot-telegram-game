@@ -28,7 +28,7 @@ function setMessage(userMsg, botMsg) {
     reply_to_message_id: userMsg.message_id,
   };
   let chatId = userMsg.chat.id;
-  bot.sendMessage(chatId, botMsg, opts);
+  return bot.sendMessage(chatId, botMsg, opts);
 }
 
 // depricated for now
@@ -166,21 +166,17 @@ function notReady(msg) {
 }
 
 function startGameRes(msg) {
-  bot
-    .sendMessage(
-      msg.chat.id,
-      `you have 2 min time, for join the game
-      \n click( /join ) - Or type that in the input field in below`
-    )
-    .then((res) => {
-      setTimeout(() => {
-        bot.deleteMessage(msg.chat.id, res.message_id);
-      }, 3000);
-    });
+  const message = `you have 2 min time, for join the game
+    \n click( /join ) - Or type that in the input field in below`;
+  setMessage(msg, message).then((res) => {
+    setTimeout(() => {
+      bot.deleteMessage(msg.chat.id, res.message_id);
+    }, 3000);
+  });
 }
 
 function joinRes(msg) {
-  bot.sendMessage(msg.chat.id, "You can join the Game! Welcome 👏");
+  setMessage(msg, "You can join the Game! Welcome 👏");
 }
 // {
 //   message_id: 96,
