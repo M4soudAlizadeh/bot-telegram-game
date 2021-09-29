@@ -166,17 +166,32 @@ function notReady(msg) {
 }
 
 function startGameRes(msg) {
-  const message = `you have 2 min time, for join the game
+  const message = `you have 30 seconds Time, for join the game
     \n click( /join ) - Or type that in the input field in below`;
   setMessage(msg, message).then((res) => {
     setTimeout(() => {
       bot.deleteMessage(msg.chat.id, res.message_id);
-    }, 3000);
+    }, 3 * 1000);
   });
 }
 
 function joinRes(msg) {
-  setMessage(msg, "You can join the Game! Welcome 👏");
+  setMessage(
+    msg,
+    "You can join the Game! Now you must choose a charecter for yourself \n /paladin   /warrior   /mage   /shaman   /deathknight"
+  );
+  users(msg);
+}
+
+function users(msg) {
+  const user = {
+    name: msg.from.first_name,
+    id: msg.from.id,
+    // and all data if we need
+  };
+  users_state.push(user);
+
+  return console.log(users_state);
 }
 // {
 //   message_id: 96,
