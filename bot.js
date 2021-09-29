@@ -54,7 +54,10 @@ bot.on("message", (msg) => {
       helpResponse(msg);
       break;
     case "/startGame":
-      notReady(msg);
+      startGameRes(msg);
+      break;
+    case "/join":
+      joinRes(msg);
       break;
     case "/saveGame":
       notReady(msg);
@@ -162,6 +165,23 @@ function notReady(msg) {
   setMessage(msg, "this command is not ready yet! 🚶‍♂️");
 }
 
+function startGameRes(msg) {
+  bot
+    .sendMessage(
+      msg.chat.id,
+      `you have 2 min time, for join the game
+      \n click( /join ) - Or type that in the input field in below`
+    )
+    .then((res) => {
+      setTimeout(() => {
+        bot.deleteMessage(msg.chat.id, res.message_id);
+      }, 3000);
+    });
+}
+
+function joinRes(msg) {
+  bot.sendMessage(msg.chat.id, "You can join the Game! Welcome 👏");
+}
 // {
 //   message_id: 96,
 //   from: {
