@@ -180,10 +180,10 @@ function joinRes(msg) {
     msg,
     "You can join the Game! Now you must choose a charecter for yourself \n /paladin   /warrior   /mage   /shaman   /deathknight"
   );
-  users(msg);
+  pushUsers(msg);
 }
 
-function users(msg) {
+function pushUsers(msg) {
   const user = {
     name: msg.from.first_name,
     id: msg.from.id,
