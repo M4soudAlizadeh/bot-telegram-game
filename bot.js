@@ -4,23 +4,42 @@ const TelegramBot = require("node-telegram-bot-api");
 const token = "2011631560:AAFfFLTPgclaP07568nNq-2CJHMa2cPRpYo";
 const bot = new TelegramBot(token, { polling: true });
 
-var users_state = [];
+var users_state = [129616283];
 
-function userState(id) {
-  let indexOfUser;
-  let userState;
-  let found = false;
-  for (let i = 0; users_state.length; i++) {
-    if (users_state[i] == id) {
-      indexOfUser = i;
-      found = true;
-      userState = users_state[i];
-    }
-    if (!found) {
-      users_state.push([id, 0]);
-    }
-  }
-  return users_state;
+function userState(id, chatID) {
+  if (users_state.length === 0) return users_state.push(id);
+  users_state.includes(id)
+    ? bot.sendMessage(chatID, "you already join!")
+    : users_state.push(id);
+
+  // let indexOfUser;
+  // let userState;
+  // let found = false;
+  // if (users_state.length === 0) users_state.push(id);
+  // found = true;
+  // return console.log(users_state);
+
+  // users_state.forEach((user, i) => {
+  // console.log(user, i)
+  // if (user !== id) users_state.push(id);
+  // {
+  // indexOfUser = i;
+  // found = true;
+  // userState = users_state[i];
+  // }
+  // return console.log(users_state);
+  // });
+  // for (let i = 0; users_state.length; i++) {
+  //   if (users_state[i] == id) {
+  //     indexOfUser = i;
+  //     found = true;
+  //     userState = users_state[i];
+  //   }
+  //   if (!found) {
+  //     users_state.push([id, 0]);
+  //   }
+  // }
+  return console.log(users_state);
 }
 
 function setMessage(userMsg, botMsg) {
@@ -50,7 +69,7 @@ function resetState(msg) {
 bot.on("message", (msg) => {
   console.log("msg received");
   switch (msg.text) {
-    case "/help":
+    case "/start" || "/help":
       helpResponse(msg);
       break;
     case "/startGame":
@@ -180,7 +199,7 @@ function joinRes(msg) {
     msg,
     "You can join the Game! Now you must choose a charecter for yourself \n /paladin   /warrior   /mage   /shaman   /deathknight"
   );
-  pushUsers(msg);
+  return userState(msg.from.id, msg.chat.id);
 }
 
 function pushUsers(msg) {
