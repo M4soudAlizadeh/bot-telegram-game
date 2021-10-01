@@ -10,11 +10,11 @@ function userState(id) {
   let indexOfUser;
   let userState;
   let found = false;
-  for (let index; users_state.length; index++) {
-    if (users_state[index][0] == id) {
-      indexOfUser = index;
+  for (let i = 0; users_state.length; i++) {
+    if (users_state[i] == id) {
+      indexOfUser = i;
       found = true;
-      userState = users_state[index][1];
+      userState = users_state[i];
     }
     if (!found) {
       users_state.push([id, 0]);
