@@ -1,10 +1,24 @@
 /* jshint ignore:start */
+const express = require("express");
+const fs = require("fs");
 const { from } = require("form-data");
 const TelegramBot = require("node-telegram-bot-api");
 const token = "2011631560:AAFfFLTPgclaP07568nNq-2CJHMa2cPRpYo";
 const bot = new TelegramBot(token, { polling: true });
 
-var users_state = [129616283];
+var users_state = [{ 129616283: { name: "masoud", userName: "alizadeh" } }];
+
+const saveData = (data) => {
+  const finished = (err) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+  };
+  const jsonData = JSON.stringify(data);
+  fs.writeFile("data.json", jsonData, finished);
+};
+saveData(users_state);
 
 function userState(id, chatID) {
   if (users_state.length === 0) return users_state.push(id);
