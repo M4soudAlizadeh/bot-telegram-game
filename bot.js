@@ -22,10 +22,8 @@ const saveData = (data, file = "data.json") => {
     }
   };
   fs.writeFile(file, jsonData, finished);
-
-  console.log(users_state);
 };
-saveData(users_state);
+// saveData(users_state);
 
 function userState(id, chatID) {
   if (users_state.length === 0) return users_state.push(id);
@@ -90,7 +88,10 @@ function resetState(msg) {
 bot.on("message", (msg) => {
   console.log("msg received");
   switch (msg.text) {
-    case "/start" || "/help":
+    case "/start":
+      start(msg);
+      break;
+    case "/help":
       helpResponse(msg);
       break;
     case "/startGame":
@@ -175,6 +176,8 @@ bot.on("message", (msg) => {
   }
 });
 
+function start() {}
+
 function rollDice(msg, num) {
   let response = Math.floor(Math.random() * num);
   setMessage(msg, response);
@@ -223,11 +226,21 @@ function joinRes(msg) {
   return userState(msg.from.id, msg.chat.id);
 }
 
-function pushUsers(msg) {
+function createCharecter(msg) {
+  // if(msg.text ==)
+  bot.sendMessage();
+
   const user = {
-    name: msg.from.first_name,
-    id: msg.from.id,
-    // and all data if we need
+    acc: msg.from.id,
+    heros: [
+      {
+        name: "",
+        race: "",
+        class: "",
+        state: "",
+        // and all data if we need
+      },
+    ],
   };
   users_state.push(user);
 
